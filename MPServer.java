@@ -65,44 +65,28 @@ public class MPServer{
 		public void run(){
 		
 			while(true){ 
-				
 				String msg = connect.getMessage();
-				if(msg == null || msg.equals("@DONE")){
-					System.out.println ("A client has disconnected.");
-					break;
+				if(msg == null){
+					continue;
 				}
-				else if(msg != null){
+				if(msg.equals("DONE")){
+					connect.sendMessage("DONE");
+				}
+				else{
+					String[] inputNames = msg.split(",", 2);
+					String result;
+
 					if(selected_algo.equals("TRUE LOVE")){
-						truelove(msg);
+						TrueLove tl = new TrueLove();
+						result = tl.compute(inputNames[0], inputNames[1]);
 					}
 					else{
-						flames(msg);
+						Flames fl = new Flames();
+						result = fl.compute(inputNames[0], inputNames[1]);
 					}
-				}
-			}
-		}
 
-		public void flames(String msg){
-
-			if(msg.equals("DONE")){
-				connect.sendMessage("DONE");
-			}
-			else{
-				//insert flames algo here
-				System.out.println("Flames");
-				connect.sendMessage("Flames");
-			}
-		}
-
-		public void truelove(String msg){
-
-			if(msg.equals("DONE")){
-				connect.sendMessage("DONE");
-			}
-			else{
-				//insert flames algo here
-				System.out.println("True Love");
-				connect.sendMessage("True Love");
+					connect.sendMessage(result);
+				}	
 			}
 		}
    }
