@@ -66,6 +66,7 @@ public class MPClient{
 	private static class ThreadSend extends Thread{
 	
 		MPConnection connect;
+		InputTester it = new InputTester();
 	
 		public ThreadSend(MPConnection connect){
 			this.connect = connect;
@@ -74,13 +75,19 @@ public class MPClient{
 		public void run(){
 			while(true){
 				msg = JOptionPane.showInputDialog("Input the names.");
-				if((msg != null) && msg_ready){
+				if(it.checkInput(msg) && msg_ready){
 					connect.sendMessage(msg);
 				}
-				else{
+				else if(msg == null){
 					connect.sendMessage("DONE");
 					msg_ready = false;
 					break;
+				}
+				else if(!msg_ready){
+					System.out.println("Try again in a few seconds. Connection is not yet ready.");
+				}
+				else{
+					System.out.println("Invalid Input!");
 				}
 			}
 		}

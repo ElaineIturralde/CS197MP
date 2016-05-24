@@ -24,7 +24,6 @@ public class InputTester{
 					}
 					for(int j = 0; j<x.length(); j++){
 						if(!Character.isLetter(x.charAt(j))){
-							System.out.println(x.charAt(j));
 							return false;
 						}
 					}

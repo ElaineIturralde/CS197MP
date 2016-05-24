@@ -42,7 +42,7 @@ public class Flames implements Calculator{
 		int start = 0;
 
 		if(count == 0){
-			return "unknown";
+			return "F";
 		}
 
 		while(flames.length() != 1){
