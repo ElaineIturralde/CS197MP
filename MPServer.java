@@ -17,10 +17,12 @@ public class MPServer{
 			String port = JOptionPane.showInputDialog("Input Port");
 			ssocket = new ServerSocket(Integer.parseInt(port));
 			System.out.println ("Server is ready.");
+			Object[] algos = { "FLAMES", "TRUE LOVE", "CAN'T DECIDE" };
+			Object selected_algo = JOptionPane.showInputDialog(null, "Choose an algorithm", "Input", JOptionPane.INFORMATION_MESSAGE, null, algos, algos[0]);
 
 			while(true){
 				socket = ssocket.accept();
-				socket_thread = new ThreadSocket(socket);
+				socket_thread = new ThreadSocket(socket, selected_algo);
 				System.out.println ("A client has connected");
 				socket_thread.start();
 			}
@@ -35,18 +37,26 @@ public class MPServer{
 
    		Socket socket;
 		MPConnection connect;
+		Object selected_algo;
 
-		public ThreadSocket(Socket socket){
+		public ThreadSocket(Socket socket, Object selected_algo){
 			this.socket = socket;
 			this.connect = new MPConnection(socket);
+			this.selected_algo = selected_algo;
 		}
 
 		public void run(){
 		
 			while(true){ 
+				
 				String msg = connect.getMessage();
 				if(msg != null){
-					flames(msg);
+					if(selected_algo.equals("TRUE LOVE")){
+						truelove(msg);
+					}
+					else{
+						flames(msg);
+					}
 				}
 				else{
 					break;
@@ -61,8 +71,20 @@ public class MPServer{
 			}
 			else{
 				//insert flames algo here
-				System.out.println("Love");
-				connect.sendMessage("Love");
+				System.out.println("Flames");
+				connect.sendMessage("Flames");
+			}
+		}
+
+		public void truelove(String msg){
+
+			if(msg.equals("DONE")){
+				connect.sendMessage("DONE");
+			}
+			else{
+				//insert flames algo here
+				System.out.println("True Love");
+				connect.sendMessage("True Love");
 			}
 		}
    }
