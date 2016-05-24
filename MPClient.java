@@ -4,83 +4,79 @@ import java.util.*;
 import javax.swing.*;
 
 public class MPClient{
-	static ThreadGet get_msg;
-	static ThreadSend send_msg;
+	static ClientThread get_msg;
+	static Socket s;
 	static Boolean msg_ready = false;
 	static MPConnection connect;
 	static String msg = "";
 
 	public static void main(String args[]) {
 		
-		try {
-
+		Boolean repeat = true;
+		Boolean connected = true;
+		
+		while(repeat){
+			
 			System.out.println("Client tries to connect to server...");
 			String address = JOptionPane.showInputDialog("Input IP Address");
 			String port = JOptionPane.showInputDialog("Input Port");
-
-			Socket s = new Socket(address, Integer.parseInt(port));
-			connect = new MPConnection(s);
-			get_msg = new ThreadGet(connect);
 			
-			get_msg.start();
-
-			javax.swing.SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					try{
-						msg = "Client has connected!";
-						System.out.println(msg);
-						msg_ready = true;
-						send_msg = new ThreadSend(connect);
-						send_msg.start();
-					}catch(Exception e){}
+			try{
+				s = new Socket(address, Integer.parseInt(port));
+				repeat = false;
+			} catch (Exception e) {
+				if(address == null && port == null){
+					JOptionPane.showMessageDialog(null, "You have cancelled.", "Cancelled", JOptionPane.ERROR_MESSAGE);
+					connected = false;
+					break;
 				}
-			});
-
-		} catch (Exception e) {
-			System.out.println("An error was encountered.");
-			e.printStackTrace();
-		}
-   }
-
-   private static class ThreadGet extends Thread{
-
-		MPConnection connect;
-	
-		public ThreadGet(MPConnection connect){
-			this.connect = connect;
-		}
-	
-		public void run(){
-			while(true){
-				msg = connect.getMessage();
-				if(msg != null || msg != ""){
-					if(msg.equals("DONE")){
-						break;
-					}
-					System.out.println (msg);
+				else{
+					JOptionPane.showMessageDialog(null, "Invalid IP Address/Port. Try again.", "Invalid", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
-	}
-
-	private static class ThreadSend extends Thread{
 	
+		if(connected){
+			System.out.println("Client has connected!");
+			connect = new MPConnection(s);
+			get_msg = new ClientThread(connect);
+			
+			try{
+				get_msg.start();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "An error has occurred. Client thread has stopped.", "An Error Occurred", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+   }
+
+   private static class ClientThread extends Thread{
+
 		MPConnection connect;
 	
-		public ThreadSend(MPConnection connect){
+		public ClientThread(MPConnection connect){
 			this.connect = connect;
-		}		
-		
+		}
+	
 		public void run(){
 			while(true){
+				
 				msg = JOptionPane.showInputDialog("Input the names.");
-				if((msg != null) && msg_ready){
+				if(msg != null){
 					connect.sendMessage(msg);
 				}
 				else{
-					connect.sendMessage("DONE");
-					msg_ready = false;
+					connect.sendMessage("@DONE");
+					System.out.println("Client has disconnected.");
 					break;
+				}
+				
+				msg = connect.getMessage();
+				if(msg == null){
+					JOptionPane.showMessageDialog(null, "An error has occurred. Client thread has stopped.", "An Error Occurred", JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+				else{
+					System.out.println (msg);
 				}
 			}
 		}

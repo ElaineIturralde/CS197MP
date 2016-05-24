@@ -11,25 +11,42 @@ public class MPServer{
 	static Socket socket;
 
 	public static void main(String args[]) {
-   
-		try {
 
+		Object[] algos = { "FLAMES", "TRUE LOVE", "CAN'T DECIDE" };
+		Object selected_algo = "FLAMES";
+		Boolean repeat = true;
+		Boolean connected = true;
+
+		selected_algo = JOptionPane.showInputDialog(null, "Input", "Choose an algorithm", JOptionPane.INFORMATION_MESSAGE, null, algos, algos[0]);
+
+		while(repeat){
+				
 			String port = JOptionPane.showInputDialog("Input Port");
-			ssocket = new ServerSocket(Integer.parseInt(port));
-			System.out.println ("Server is ready.");
-			Object[] algos = { "FLAMES", "TRUE LOVE", "CAN'T DECIDE" };
-			Object selected_algo = JOptionPane.showInputDialog(null, "Choose an algorithm", "Input", JOptionPane.INFORMATION_MESSAGE, null, algos, algos[0]);
 
-			while(true){
-				socket = ssocket.accept();
-				socket_thread = new ThreadSocket(socket, selected_algo);
-				System.out.println ("A client has connected");
-				socket_thread.start();
+			try {				
+				ssocket = new ServerSocket(Integer.parseInt(port));
+				repeat = false;
+			} catch (Exception e) {
+				if(port == null){
+					JOptionPane.showMessageDialog(null, "You have cancelled.", "Cancelled", JOptionPane.ERROR_MESSAGE);
+					connected = false;
+					break;
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Invalid Port. Try again.", "Invalid", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-
-		} catch (Exception e) {
-			System.out.println("An error was encountered.");
-			e.printStackTrace();
+		}
+		
+		while(connected){	
+			try{
+				socket = ssocket.accept();
+				System.out.println ("A client has connected");
+				socket_thread = new ThreadSocket(socket, selected_algo);
+				socket_thread.start();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "An error has occurred. Server thread has stopped.", "An Error Occurred", JOptionPane.ERROR_MESSAGE);
+			}
 		}
    }
 
@@ -50,16 +67,17 @@ public class MPServer{
 			while(true){ 
 				
 				String msg = connect.getMessage();
-				if(msg != null){
+				if(msg == null || msg.equals("@DONE")){
+					System.out.println ("A client has disconnected.");
+					break;
+				}
+				else if(msg != null){
 					if(selected_algo.equals("TRUE LOVE")){
 						truelove(msg);
 					}
 					else{
 						flames(msg);
 					}
-				}
-				else{
-					break;
 				}
 			}
 		}

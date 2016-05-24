@@ -1,8 +1,6 @@
-//ELAINE C. ITURRALDE 201235499
-//java version "1.8.0_25"
-
 import java.io.*;
 import java.net.*;
+import javax.swing.*;
 
 public class MPConnection {	
 	Socket s;
@@ -25,7 +23,7 @@ public class MPConnection {
 			out.flush();
 			return true;
 		} catch(Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "An error has occurred while sending the message.", "An Error Occurred", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 	}
@@ -34,7 +32,7 @@ public class MPConnection {
 		try {
 			return in.readLine();
 		} catch(Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "An error has occurred while getting the message.", "An Error Occurred", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
 	}
