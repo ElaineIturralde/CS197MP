@@ -48,9 +48,10 @@ public class MPServer{
 		public void run(){
 		
 			while(true){ 
-				
 				String msg = connect.getMessage();
-
+				if(msg == null){
+					continue;
+				}
 				if(msg.equals("DONE")){
 					connect.sendMessage("DONE");
 				}
@@ -68,7 +69,7 @@ public class MPServer{
 					}
 
 					connect.sendMessage(result);
-				}
+				}	
 			}
 		}
    }
