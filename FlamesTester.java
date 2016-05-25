@@ -5,8 +5,9 @@ public class FlamesTester{
 	public static void main(String args[]){
 		fl = new Flames();
 		//assume inputs are validated before reaching Flames calculator
-		//test_firstname();
-		//test_wholename();
+
+		System.out.println("test compute function");
+		test_compute();
 
 		System.out.println("test inputPrep function");
 		test_lowercase();
@@ -49,17 +50,12 @@ public class FlamesTester{
 			System.out.println("Failed");
 		}
 	}
-	/*
-	public static void test_firstname(){
-		String result = fl.compute("john");
-		assertt(result, "john");
+
+	public static void test_compute(){
+		String result = fl.compute("john", "jane");
+		assertt(result, "FLAMES result is: Enemy");
 	}
 
-	public static void test_wholename(){
-		String result = fl.compute("john doe");
-		assertt(result, "johndoe");
-	}
-	*/
 	public static void test_lowercase(){
 		String result = fl.inputPrep("john");
 		assertt(result, "john");
