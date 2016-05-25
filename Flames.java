@@ -19,59 +19,108 @@ public class Flames implements Calculator{
 	}
 
 	public String doAlgo(String x, String y){
+		String[2] input = new String[];
+
+		input = swap(x, y);
+
+		input = removeSameChar(input);
+
+		int count = getCount(input);
+		
+		String raw_result = crossOutFlames(count);
+
+		return raw_result;
+	}
+
+	public String[] swap(String x, String y){
 		//swapping: x should be shorter
+
+		String[2] arr = new String[];
+		arr[0] = x;
+		arr[1] = y;
+
 		if(y.length() < x.length()){
-			String foo = x;
-			x = y;
-			y = foo;
+			arr[0] = y;
+			arr[1] = x;
 		}
 
+		return arr;
+	}
+
+	public String[] removeSameChar(String[] arr){
 		//removing same characters
-		for(int i = 0; i<x.length(); i++){
-			int y_length = y.length();
+		for(int i = 0; i<arr[0].length(); i++){
+			int y_length = arr[1].length();
 			
-			y = y.replace(x.charAt(i)+"", "");
+			arr[1] = arr[1].replaceFirst(arr[0].charAt(i)+"", "");
 			
-			if(y.length() < y_length){
-				x = x.replace(x.charAt(i)+"", "");
+			if(arr[1].length() < y_length){
+				arr[0] = arr[0].replace(arr[0].charAt(i)+"", "");
 				i--;
 			}
 		}
 
-		String to_count = x + y + "";
-		int count = to_count.length();
+		return arr;
+	}
+
+	public int getCount(String[] arr){
+		String to_count = arr[0] + arr[1] + "";
+		return to_count.length();
+	}
+
+	public String crossOutFlames(int count){
 		String flames = "FLAMES";
 		int start = 0;
-
-		if(count == 0){
-			return "F";
-		}
-
-		//loop for flames: cross out letters until only one is left
-		while(flames.length() != 1){
-			int remove_charAt = ((start+count)-1)%flames.length();
-			
-			if(remove_charAt == flames.length()-1){
-				flames = flames.substring(0, remove_charAt);
-				start = 0;
-			}
-			else if(remove_charAt == 0){
-				flames = flames.substring(1, flames.length());
-				start = 0;
-			}
-			else{
-				flames = flames.substring(0, remove_charAt) + flames.substring(remove_charAt+1, flames.length());
-				start = remove_charAt;
-			}
+		
+		while(flames.length() >= 1){
+			int remove_charAt = removeWhichChar(start, count, flames.length());
+			flames = removeChar(flames, remove_charAt);
+			start = getStart(flames, remove_charAt);
 		}
 
 		return flames;
 	}
-	
+
+	public int removeWhichChar(int start, int count, int length){
+		int remove_charAt = ((start+count)-1)%length;
+		return remove_charAt;
+	}
+
+	public String removeChar(String flames, int remove_charAt){
+		if(remove_charAt == -1){
+			flames = "";
+		}
+		else if(remove_charAt == flames.length()-1){
+			flames = flames.substring(0, remove_charAt);
+		}
+		else if(remove_charAt == 0){
+			flames = flames.substring(1, flames.length());
+		}
+		else{
+			flames = flames.substring(0, remove_charAt) + flames.substring(remove_charAt+1, flames.length());
+		}
+	}
+
+	public int getStart(String flames, remove_charAt){
+		if(remove_charAt == flames.length()){
+			return 0;
+		}
+		else{
+			return remove_charAt;
+		}
+	}
 
 	public String getOutput(String raw){
 		String[] map = {"Friendship", "Love", "Affection", "Marriage", "Enemy", "Sibling"};
-		return "FLAMES result is: " + map["FLAMES".indexOf(raw)];
+		if(raw.equals("")){
+			return "FLAMES result is: ";
+		}
+		else if("FLAMES".indexOf(raw) == -1){
+			return "An error occurred.";
+		}
+		else{
+			return "FLAMES result is: " + map["FLAMES".indexOf(raw)];
+		}	
 	}
 
 

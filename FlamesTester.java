@@ -6,9 +6,11 @@ public class FlamesTester{
 		fl = new Flames();
 		//assume inputs are validated before reaching Flames calculator
 
+		//Integration test
 		System.out.println("test compute function");
 		test_compute();
 
+		//equivalence partitioning
 		System.out.println("test inputPrep function");
 		test_lowercase();
 		test_uppercase();
@@ -16,22 +18,42 @@ public class FlamesTester{
 		test_name_wspace();
 		test_name_wospace();
 
-		System.out.println("test doAlgo function: swapping");
+		//equivalence partitioning??
+		System.out.println("test swap function");
 		test_first_isLonger();
 		test_second_isLonger();
 		test_same_length();
 
-		System.out.println("test doAlgo function: removing same characters");
+		//equivalence partitioning??
+		System.out.println("test removeSameChar function");
 		test_all_removed();
 		test_none_removed();
 		test_some_removed();
 
-		System.out.println("test doAlgo function: loop");
+		//equivalence partitioning??
+		System.out.println("test getCount function");
+		test_both_positive();
+		test_one_zero();
+		test_two_zero();
+		test_null_strings();
+
+		//
+		System.out.println("test removeWhichChar function");
+		test_count_lt_six();
+		test_count_mt_six();
+
+		System.out.println("test removeChar function");
 		test_cross_last();
 		test_cross_first();
 		test_cross_mid();
-		test_count_lt_six();
-		test_count_mt_six();
+		test_neg_charAt();
+
+		System.out.println("test getStart function");
+		test_removed_last();
+		test_removed_first();
+		test_removed_mid();
+		test_removed_outOfBounds();
+		
 
 		System.out.println("test getOutput function");
 		test_friendship();
@@ -40,6 +62,7 @@ public class FlamesTester{
 		test_marriage();
 		test_enemy();
 		test_sibling();
+		test_wspace();
 	}
 
 	public static void assertt(String result, String expected){
@@ -82,7 +105,7 @@ public class FlamesTester{
 	}
 
 	public static void test_first_isLonger(){
-		String result = fl.doAlgo("ABCDEF", "ABC");
+		String result = fl.swap("ABCDEF", "ABC");
 		assertt(result, "F");
 	}
 
