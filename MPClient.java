@@ -52,6 +52,7 @@ public class MPClient{
    private static class ClientThread extends Thread{
 
 		MPConnection connect;
+		InputTester it = new InputTester();
 	
 		public ClientThread(MPConnection connect){
 			this.connect = connect;
@@ -61,13 +62,16 @@ public class MPClient{
 			while(true){
 				
 				msg = JOptionPane.showInputDialog("Input the names.");
-				if(msg != null){
+				if(it.checkInput(msg)){
 					connect.sendMessage(msg);
 				}
-				else{
+				else if(msg == null){
 					connect.sendMessage("@DONE");
 					System.out.println("Client has disconnected.");
 					break;
+				}
+				else{
+					System.out.println("Invalid input!")
 				}
 				
 				msg = connect.getMessage();
