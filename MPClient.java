@@ -52,7 +52,7 @@ public class MPClient{
    private static class ClientThread extends Thread{
 
 		MPConnection connect;
-		InputTester it = new InputTester();
+		InputChecker ic = new InputChecker();
 	
 		public ClientThread(MPConnection connect){
 			this.connect = connect;
@@ -62,7 +62,7 @@ public class MPClient{
 			while(true){
 				
 				msg = JOptionPane.showInputDialog("Input the names.");
-				if(it.checkInput(msg)){
+				if(ic.checkInput(msg)){
 					connect.sendMessage(msg);
 				}
 				else if(msg == null){
