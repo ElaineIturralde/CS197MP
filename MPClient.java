@@ -71,7 +71,7 @@ public class MPClient{
 					break;
 				}
 				else{
-					System.out.println("Invalid input!")
+					System.out.println("Invalid input!");
 				}
 				
 				msg = connect.getMessage();
