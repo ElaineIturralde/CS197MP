@@ -19,12 +19,14 @@ public class Flames implements Calculator{
 	}
 
 	public String doAlgo(String x, String y){
+		//swapping: x should be shorter
 		if(y.length() < x.length()){
 			String foo = x;
 			x = y;
 			y = foo;
 		}
 
+		//removing same characters
 		for(int i = 0; i<x.length(); i++){
 			int y_length = y.length();
 			
@@ -45,6 +47,7 @@ public class Flames implements Calculator{
 			return "F";
 		}
 
+		//loop for flames: cross out letters until only one is left
 		while(flames.length() != 1){
 			int remove_charAt = ((start+count)-1)%flames.length();
 			
