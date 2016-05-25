@@ -66,12 +66,13 @@ public class MPClient{
 					connect.sendMessage(msg);
 				}
 				else if(msg == null){
-					connect.sendMessage("@DONE");
+					connect.sendMessage("DONE"); //bakit may @?
 					System.out.println("Client has disconnected.");
 					break;
 				}
 				else{
 					System.out.println("Invalid input!");
+					continue;
 				}
 				
 				msg = connect.getMessage();
