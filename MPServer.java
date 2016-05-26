@@ -17,8 +17,10 @@ public class MPServer{
 		Boolean repeat = true;
 		Boolean connected = true;
 
-		while(selected_algo == null){
-			selected_algo = JOptionPane.showInputDialog(null, "Input", "Choose an algorithm", JOptionPane.INFORMATION_MESSAGE, null, algos, algos[0]);
+		selected_algo = JOptionPane.showInputDialog(null, "Input", "Choose an algorithm", JOptionPane.INFORMATION_MESSAGE, null, algos, algos[0]);
+		
+		if(selected_algo == null){
+			selected_algo = algos[0];
 		}
 
 		while(repeat){
