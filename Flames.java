@@ -7,7 +7,6 @@ public class Flames implements Calculator{
 	public String compute(String x, String y){
 		x = inputPrep(x);
 		y = inputPrep(y);
-
 		String raw_result = doAlgo(x, y);
 
 		return getOutput(raw_result);
@@ -19,10 +18,10 @@ public class Flames implements Calculator{
 	}
 
 	public String doAlgo(String x, String y){
-		String[2] input = new String[];
+		String[] input = new String[2];
 
 		input = swap(x, y);
-
+		
 		input = removeSameChar(input);
 
 		int count = getCount(input);
@@ -35,7 +34,7 @@ public class Flames implements Calculator{
 	public String[] swap(String x, String y){
 		//swapping: x should be shorter
 
-		String[2] arr = new String[];
+		String[] arr = new String[2];
 		arr[0] = x;
 		arr[1] = y;
 
@@ -55,7 +54,7 @@ public class Flames implements Calculator{
 			arr[1] = arr[1].replaceFirst(arr[0].charAt(i)+"", "");
 			
 			if(arr[1].length() < y_length){
-				arr[0] = arr[0].replace(arr[0].charAt(i)+"", "");
+				arr[0] = arr[0].replaceFirst(arr[0].charAt(i)+"", "");
 				i--;
 			}
 		}
@@ -72,7 +71,7 @@ public class Flames implements Calculator{
 		String flames = "FLAMES";
 		int start = 0;
 		
-		while(flames.length() >= 1){
+		while(flames.length() > 1){
 			int remove_charAt = removeWhichChar(start, count, flames.length());
 			flames = removeChar(flames, remove_charAt);
 			start = getStart(flames, remove_charAt);
@@ -99,9 +98,11 @@ public class Flames implements Calculator{
 		else{
 			flames = flames.substring(0, remove_charAt) + flames.substring(remove_charAt+1, flames.length());
 		}
+
+		return flames;
 	}
 
-	public int getStart(String flames, remove_charAt){
+	public int getStart(String flames, int remove_charAt){
 		if(remove_charAt == flames.length()){
 			return 0;
 		}
@@ -114,9 +115,6 @@ public class Flames implements Calculator{
 		String[] map = {"Friendship", "Love", "Affection", "Marriage", "Enemy", "Sibling"};
 		if(raw.equals("")){
 			return "FLAMES result is: ";
-		}
-		else if("FLAMES".indexOf(raw) == -1){
-			return "An error occurred.";
 		}
 		else{
 			return "FLAMES result is: " + map["FLAMES".indexOf(raw)];

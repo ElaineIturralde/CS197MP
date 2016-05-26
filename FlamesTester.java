@@ -7,55 +7,57 @@ public class FlamesTester{
 		//assume inputs are validated before reaching Flames calculator
 
 		//Integration test
-		System.out.println("test compute function");
+		System.out.println("\nTest compute function");
 		test_compute();
 
 		//equivalence partitioning
-		System.out.println("test inputPrep function");
+		System.out.println("\nTest inputPrep function");
 		test_lowercase();
 		test_uppercase();
 		test_camelcase();
 		test_name_wspace();
 		test_name_wospace();
 
-		//equivalence partitioning??
-		System.out.println("test swap function");
+		//(< > ==) equivalence partitioning??
+		System.out.println("\nTest swap function");
 		test_first_isLonger();
 		test_second_isLonger();
 		test_same_length();
 
 		//equivalence partitioning??
-		System.out.println("test removeSameChar function");
+		System.out.println("\nTest removeSameChar function");
 		test_all_removed();
 		test_none_removed();
 		test_some_removed();
 
-		//equivalence partitioning??
-		System.out.println("test getCount function");
+		//(++ 0+ +0 00) equivalence partitioning??
+		System.out.println("\nTest getCount function");
 		test_both_positive();
 		test_one_zero();
-		test_two_zero();
-		test_null_strings();
+		test_both_zero();
 
-		//
-		System.out.println("test removeWhichChar function");
-		test_count_lt_six();
-		test_count_mt_six();
+		//(< > ==) equivalence partitioning??
+		System.out.println("\nTest removeWhichChar function");
+		test_count_lt_length();
+		test_count_mt_length();
+		test_count_eq_length();
 
-		System.out.println("test removeChar function");
+		//boundary values
+		System.out.println("\nTest removeChar function");
 		test_cross_last();
 		test_cross_first();
 		test_cross_mid();
 		test_neg_charAt();
 
-		System.out.println("test getStart function");
+		//boundary values
+		System.out.println("\nTest getStart function");
 		test_removed_last();
 		test_removed_first();
 		test_removed_mid();
 		test_removed_outOfBounds();
 		
-
-		System.out.println("test getOutput function");
+		//equivalence partitioning
+		System.out.println("\nTest getOutput function");
 		test_friendship();
 		test_love();
 		test_affection();
@@ -105,58 +107,148 @@ public class FlamesTester{
 	}
 
 	public static void test_first_isLonger(){
-		String result = fl.swap("ABCDEF", "ABC");
-		assertt(result, "F");
+		String arr[] = new String[2];
+		arr = fl.swap("ABCDEF", "ABC");
+		String result = arr[0] + arr[1];
+		assertt(result, "ABCABCDEF");
 	}
 
 	public static void test_second_isLonger(){
-		String result = fl.doAlgo("ABC", "ABCDEF");
-		assertt(result, "F");
+		String arr[] = new String[2];
+		arr = fl.swap("ABC", "ABCDEF");
+		String result = arr[0] + arr[1];
+		assertt(result, "ABCABCDEF");
 	}
 
 	public static void test_same_length(){
-		String result = fl.doAlgo("ABCDEF", "GHIJKL");
-		assertt(result, "A");
+		String arr[] = new String[2];
+		arr = fl.swap("ABCDEF", "GHIJKL");
+		String result = arr[0] + arr[1];
+		assertt(result, "ABCDEFGHIJKL");
 	}
 
 	public static void test_all_removed(){
-		String result = fl.doAlgo("john", "john");
-		assertt(result, "F");	//di ko sure kung ano talaga dapat sagot dito
+		String arr[] = new String[2];
+
+		arr[0] = "john";
+		arr[1] = "john";
+
+		arr = fl.removeSameChar(arr);
+		String result = arr[0] + arr[1];
+		assertt(result, "");
 	}
 
 	public static void test_none_removed(){
-		String result = fl.doAlgo("alice", "bob");
-		assertt(result, "A");
+		String arr[] = new String[2];
+
+		arr[0] = "alice";
+		arr[1] = "bob";
+
+		arr = fl.removeSameChar(arr);
+		String result = arr[0] + arr[1];
+		assertt(result, "alicebob");
 	}
 
 	public static void test_some_removed(){
-		String result = fl.doAlgo("alice", "alan");
-		assertt(result, "E");
+		String arr[] = new String[2];
+
+		arr[0] = "alice";
+		arr[1] = "alan";
+
+		arr = fl.removeSameChar(arr);
+		String result = arr[0] + arr[1];
+		assertt(result, "icean");
+	}
+
+	public static void test_both_positive(){
+		String arr[] = new String[2];
+
+		arr[0] = "john";
+		arr[1] = "jane";
+
+		String result = fl.getCount(arr) + "";
+		assertt(result, "8");
+	}
+
+	public static void test_one_zero(){
+		String arr[] = new String[2];
+
+		arr[0] = "john";
+		arr[1] = "";
+
+		String result = fl.getCount(arr) + "";
+		assertt(result, "4");
+
+		arr[0] = "";
+		arr[1] = "jane";
+
+		result = fl.getCount(arr) + "";
+		assertt(result, "4");
+	}
+
+	public static void test_both_zero(){
+		String arr[] = new String[2];
+
+		arr[0] = "";
+		arr[1] = "";
+
+		String result = fl.getCount(arr) + "";
+		assertt(result, "0");
+	}
+
+	public static void test_count_lt_length(){
+		String result = fl.removeWhichChar(0, 3, 6) + "";
+		assertt(result, "2");
+	}
+
+	public static void test_count_mt_length(){
+		String result = fl.removeWhichChar(3, 3, 4) + "";
+		assertt(result, "1");
+	}
+
+	public static void test_count_eq_length(){
+		String result = fl.removeWhichChar(3, 4, 6) + "";
+		assertt(result, "0");
 	}
 
 	public static void test_cross_last(){
-		String result = fl.doAlgo("abc", "def");
-		assertt(result, "M");
+		String result = fl.removeChar("abc", 2);
+		assertt(result, "ab");
 	}
 
 	public static void test_cross_first(){
-		String result = fl.doAlgo("abb", "bbb");
-		assertt(result, "S");
+		String result = fl.removeChar("abc", 0);
+		assertt(result, "bc");
 	}
 
 	public static void test_cross_mid(){
-		String result = fl.doAlgo("abc", "abcdef");
-		assertt(result, "F");
+		String result = fl.removeChar("abc", 1);
+		assertt(result, "ac");
 	}
 
-	public static void test_count_lt_six(){
-		String result = fl.doAlgo("abcdef", "abc");
-		assertt(result, "F");
+	public static void test_neg_charAt(){
+		String result = fl.removeChar("abc", -1);
+		assertt(result, "");
 	}
 
-	public static void test_count_mt_six(){
-		String result = fl.doAlgo("abc", "defg");
-		assertt(result, "E");
+	public static void test_removed_last(){
+		String result = fl.getStart("abc", 3) + "";
+		assertt(result, "0");
+	}
+
+	public static void test_removed_first(){
+		String result = fl.getStart("bcd", 0) + "";
+		assertt(result, "0");
+	}
+
+	public static void test_removed_mid(){
+		String result = fl.getStart("acd", 1) + "";
+		assertt(result, "1");
+	}
+
+	public static void test_removed_outOfBounds(){
+		String result = fl.getStart("abcd", -1) + "";
+		assertt(result, "-1");
 	}
 
 	public static void test_friendship(){
@@ -187,5 +279,10 @@ public class FlamesTester{
 	public static void test_sibling(){
 		String result = fl.getOutput("S");
 		assertt(result, "FLAMES result is: Sibling");
+	}
+
+	public static void test_wspace(){
+		String result = fl.getOutput("");
+		assertt(result, "FLAMES result is: ");
 	}
 }

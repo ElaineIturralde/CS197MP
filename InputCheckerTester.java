@@ -5,18 +5,24 @@ public class InputCheckerTester{
 	public static void main(String args[]){
 		ic = new InputChecker();
 
+		//integration test
+		System.out.println("Test checkInput function");
 		test_with_space();
 		test_no_space();
 
-
+		//equivalence partitioning
+		System.out.println("\nTest isNull function");
 		test_null();
 		test_not_null();
 
+		//equivalence partitioning
+		System.out.println("\nTest rightComma function");
 		test_no_comma();
 		test_one_comma();
 		test_many_comma();
 
-		
+		//equivalence partitioning
+		System.out.println("\nTest noSymbol function");
 		test_all_space();
 		test_wsymbol();
 		test_wosymbol();

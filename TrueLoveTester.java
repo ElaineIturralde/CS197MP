@@ -5,25 +5,30 @@ public class TrueLoveTester{
 	public static void main(String args[]){
 		tl = new TrueLove();
 
-		System.out.println("test compute function");
+		//integration test
+		System.out.println("Test compute function");
 		test_compute();
 
-		System.out.println("test inputPrep function");
+		//equivalence partitioning
+		System.out.println("\nTest inputPrep function");
 		test_lowercase();
 		test_uppercase();
 		test_camelcase();
 		test_name_wspace();
 		test_name_wospace();
 
-		System.out.println("test doAlgo function");
+		//integration test
+		System.out.println("\nTest doAlgo function");
 		test_algo();
 
-		System.out.println("test count function");
+		//equivalence partitioning??
+		System.out.println("\nTest count function");
 		test_same_all();
 		test_same_none();
 		test_same_some();
 
-		System.out.println("test getOutput function");
+		//equivalence partitioning
+		System.out.println("\nTest getOutput function");
 		test_output();
 	}
 
