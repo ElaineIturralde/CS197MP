@@ -13,11 +13,13 @@ public class MPServer{
 	public static void main(String args[]) {
 
 		Object[] algos = { "FLAMES", "TRUE LOVE", "CAN'T DECIDE" };
-		Object selected_algo = "FLAMES";
+		Object selected_algo = null;
 		Boolean repeat = true;
 		Boolean connected = true;
 
-		selected_algo = JOptionPane.showInputDialog(null, "Input", "Choose an algorithm", JOptionPane.INFORMATION_MESSAGE, null, algos, algos[0]);
+		while(selected_algo == null){
+			selected_algo = JOptionPane.showInputDialog(null, "Input", "Choose an algorithm", JOptionPane.INFORMATION_MESSAGE, null, algos, algos[0]);
+		}
 
 		while(repeat){
 				

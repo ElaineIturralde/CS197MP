@@ -66,7 +66,7 @@ public class MPClient{
 					connect.sendMessage(msg);
 				}
 				else if(msg == null){
-					connect.sendMessage("DONE"); //bakit may @?
+					connect.sendMessage("DONE"); 
 					System.out.println("Client has disconnected.");
 					break;
 				}
