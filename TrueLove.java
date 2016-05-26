@@ -1,21 +1,7 @@
-public class TrueLove implements Calculator{
+public class TrueLove extends Calculator{
 
 	public TrueLove(){
 
-	}
-
-	public String compute(String x, String y){
-		x = inputPrep(x);
-		y = inputPrep(y);
-
-		String raw_result = doAlgo(x, y);
-
-		return getOutput(raw_result);
-	}
-
-	public String inputPrep(String str){
-		str = str.toLowerCase().replace(" ", "");
-		return str;
 	}
 	
 	public String doAlgo(String x, String y){
