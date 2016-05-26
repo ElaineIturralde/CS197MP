@@ -1,6 +1,6 @@
-public class InputChecker{
+public class InputValidator{
 
-	public InputChecker(){
+	public InputValidator(){
 
 	}
 

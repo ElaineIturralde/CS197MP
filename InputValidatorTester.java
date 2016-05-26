@@ -1,9 +1,9 @@
-public class InputCheckerTester{
+public class InputValidatorTester{
 	
-	static InputChecker ic;
+	static InputValidator ic;
 
 	public static void main(String args[]){
-		ic = new InputChecker();
+		ic = new InputValidator();
 
 		//integration test
 		System.out.println("Test checkInput function");
